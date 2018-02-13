@@ -1,0 +1,28 @@
+.whiteSquare{
+  background-color: white;
+  width: 100px;
+  height: 100px;
+  border: 2px solid black;
+}
+
+.redSquare{
+  background-color: red;
+  width: 100px;
+  height: 100px;
+  border: 2px solid black;
+}
+
+img {
+  height: 80px;
+  z-index: 10;
+  top: 10px;
+  left: 10px;
+
+}
+
+#pawn {
+  height: 60px;
+  z-index: 10;
+  top: 10px;
+  left: 10px;
+}
