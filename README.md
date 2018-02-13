@@ -1,84 +1,97 @@
 
 # Queen Attack
 
-#### By Cameron Anderson & Andy Grossberg
+#### By Andy Grossberg & Hamza Naeem
 
 ## Description
-A program to test if a given set of coordinates is a valid target for the queen to attack in a game of chess.
+A program to test if a given set of words are partial or whole anagrams for a key word.
+
+## Rules
+An anagram is a word that you can rearrange the letters and it becomes a new word. For example, "bread" is an anagram of "beard".
+
+Create a web page, with MVC, where a user can input a single word and a list of other words that may be anagrams.
+
+After submitting the form, the user should be told which of the list of words were anagrams.
+
+Start by writing the specs and method first, before you begin creating a MVC webpage.
+
+The Array.Sort() method may come in handy, so try it out in the REPL to see exactly what it does.
+
+If you finish this, modify your function to handle partial matches - in other words, 'hat' should match 'path'.
 
 ## Specifications
-* choose an x and y for the queen
 
-* Display a view that is a title screen.
+* Display a view that is a title screen as Index()
 
-* Use form to ask user for an x and y coord for the queen to start on.
-- Expected Input: 3, 5
-- Expected Output: None
+* Display a Index() with empty list as @Model.
 
-* output coords to main view
-- Expected Input: None
-- Expected Output: STRING
+* Use form to ask user for a key word to test against on Index()
+  - EXPECTED INPUT: [Word]
+  - EXPECTED OUTPUT: NONE
 
-* validate queen ranges 1 - 8
-- If false return to View with form
+* Add a form for a word list to the Index()
+  - EXPECTED INPUT: <LIST> of Words
+  - EXPECTED OUTPUT: NONE
 
-* Use form to ask user for an x and y coord for the queen to target.
-- Expected Input: 4, 8
-- Expected Output: None
+* Add SUBMIT button
 
-* output coords to main view
-- Expected Input: None
-- Expected Output: STRING
+* Link SUBMIT button to "/"
 
-* validate target ranges 1 - 8
-- If false return to View with form
+* Create WORD object
 
-* validate queen and target coordinates are different
-- If false return to View with form
+* Break Key word into an Array of Chars
+  1. String Key = "test";
+  2. var ourChars = Key.ToCharArray();
 
-* Create QueenAttackTest object
+* Sort ourChars
+  - EXPECTED INPUT: ["B", "E", "A", "R", "D"];
+  - EXPECTED OUTPUT: (each Char on a separate line, "A", "B", "D", "E", "R")
 
-* Create Queen object
+* Break their word list into an array of strings split at space and punctuation
+  1. string[] wordList = Regex.Split(value, "/[^!-~] /");
 
-* a. queen x and target x are equal
-- Expected input: (3, 7) , (3, 4)
-- Expected output: True
-- Expected input: (2, 7) , (6, 4)
-- Expected output: False
+* Break their first word into an Array of Chars and send the chars to the Console
+  1. var theirChars = wordList[0].ToCharArray();
+    - EXPECTED INPUT: ["B", "R", "E", "A", "D"];
+    - EXPECTED OUTPUT: (each Char on a separate line)
 
-* b. queen y and target y are equal
-- Expected input: (8, 4) , (3, 4)
-- Expected output: True
-- Expected input: (8, 1) , (3, 4)
-- Expected output: False
+* Sort theirChars (the array of their first word)
+  - EXPECTED INPUT: ["B", "E", "A", "R", "D"];
+  - EXPECTED OUTPUT: (each Char on a separate line, "A", "B", "D", "E", "R")    
 
-* c. abs(qx - vx) is equal to abs(qy - vy)
-- Expected input: (8, 4) , (6, 6)
-- Expected output: True
-- Expected input: (1, 1) , (3, 3)
-- Expected output: True
-- Expected input: (8, 1) , (3, 4)
-- Expected output: False
+* Compare our key word Char array against their first word Char array
+  1. var theirChars = wordList[0].ToCharArray();
+  2. if(ourChars.SequenceEqual(theirChars)) { . . . }
+  - EXPECTED INPUT: ["B", "E", "A", "R", "D"];
+  - EXPECTED INPUT: ["B", "R", "E", "A", "D"];
+  - EXPECTED OUTPUT:
+    - TRUE: Write to Console "That word is a match!"
+    - FALSE: Write to Console "That word is NOT a match!"
 
-* use a - c to determine if victim can be reached by queen
-- Expected input: (8, 4) , (6, 6)
-- Expected output: "Queen takes piece"
-- Expected input: (8, 4) , (6, 3)
-- Expected output: "Queen cannot reach piece"
+* ForEach Loop through the String array of their words.
+  - EXPECTED OUTPUT: Write their String to Console, one word and a carriage return at time
 
-* refactor code as needed.
+* ForEach Loop through String array of their words, and break each string in the array into an array of Chars
+- EXPECTED OUTPUT: Write the individual Chars of their String to Console, one char and a carriage return at time
+
+* ForEach Loop through String array of their words as above but compare each Char array with our key Word Char array
+  - TRUE: Join their word Char array back to a string and add it to a List of successful compares
+  - FALSE: iterate loop
+
+* Display successful compares list of above step to screen via View() on Index page.
+
+* Refactor Code
 
 ## Setup/Installation Requirements
 
-* Clone the git repository from 'https://github.com/camander321/LeapYearTest.git'.
+* Clone the git repository from 'https://github.com/agro23/Anagram.git'.
 * run the command 'dotnet restore' to download the necessary packages.
 * run the command 'dotnet run' to build and run the server on localhost.
 * use your preferred web browser to navigate to localhost:5000
 
-
 ## Support and contact details
 
-* contact the author at chamburg321@gmail.com
+* Contact the authors via andy.grossberg@gmail.com
 
 ## Technologies Used
 
@@ -92,7 +105,7 @@ A program to test if a given set of coordinates is a valid target for the queen 
 
 ### License
 
-Copyright (c) 2018 Cameron Anderson & Andy Grossberg
+Copyright (c) 2018 Andy Grossberg & Hamza Naeem
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
