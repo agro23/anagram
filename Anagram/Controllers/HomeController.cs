@@ -2,61 +2,110 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using Anagrams.Models;
+using System.Text.RegularExpressions;
 
 namespace Anagrams.Controllers
 {
   public class HomeController : Controller
   {
 
-    [HttpGet("/")]
-    public ActionResult Index()
+     [HttpGet("/")]
+     public ActionResult Index()
     {
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      model.Add("msg", "");
-      return View("Index", model);
+      List<string> Agram = new List<string>{};
+      return View();
     }
+
 
     [HttpPost("/")]
-    public ActionResult Result()
+    public ActionResult Results()
+   {
+     List<string> Model = new List<string>{};
+     // Dictionary<string, object> model = new Dictionary<string, object>();
+     // model.Add("msg", "");
+     // return View("Index", model);
+    Anagram myWord = new Anagram("");
+    myWord.SetMyWord(Request.Form["our-word"]);
+    myWord.BreakKeyWord();
+    char[] forSorting = myWord.SortMyChars(myWord.GetMyChars());
+    // forSorting is our char list in order
+    string theirWord = Request.Form["their-list"]; // NEW
+
+    string[] theirWords = theirWord.Split(' ');
+
+    foreach (string line in theirWords)
     {
-      string msg = "";
-      int qx = Int32.Parse(Request.Form["qx"]);
-      int qy = Int32.Parse(Request.Form["qy"]);
-      int vx = Int32.Parse(Request.Form["vx"]);
-      int vy = Int32.Parse(Request.Form["vy"]);
-      if (qx < 1 || qx > 8 || qy < 1 || qy > 8)
-      {
-        msg = "Queen cannot be at those Coordinates";
-      }
-      else if(vx < 1 || vx > 8 || vy < 1 || vy > 8)
-      {
-        msg = "Victim cannot be at those Coordinates";
-      }
-      else if(qx == vx && qy == vy)
-      {
-        msg = "Queen and Victim cannot share Coordinates";
-      }
-      else
-      {
-        Queen queen = new Queen(qx, qy);
-        if (queen.CanAttack(vx, vy))
-        {
-          msg = "Queen Takes Piece!!!";
-        }
-        else
-        {
-          msg = "Queen cannot attack piece :(";
-        }
-      }
-      Dictionary<string, object> model = new Dictionary<string, object>();
-      model.Add("msg", msg);
-      model.Add("qx", qx);
-      model.Add("qy", qy);
-      model.Add("vx", vx);
-      model.Add("vy", vy);
-
-
-      return View("Index", model);
+        Console.WriteLine(line);
+        Anagram newAnagram = new Anagram(line);
+        newAnagram.Save();
     }
+    Console.WriteLine("********************************");
+
+    List<Anagram> myList = Anagram.GetAll();
+    for (var i = 1; i < myList.Count; i++)
+    {
+      Console.WriteLine(myList[i].GetYourWord() + "\n");
+      string weee = myList[i].GetYourWord();
+      myList[i].BreakToChar(weee);
+      char [] x = myList[i].SortMyChars(myList[i].GetTheirWord());
+
+      if (forSorting.Length == x.Length)
+      {
+        int winner = 0;
+        for(var j = 0; j < forSorting.Length; j++)
+        {
+          if (forSorting[j] == x[j])
+          {
+              winner++;
+          }
+        }
+        if (winner == forSorting.Length)
+        {
+          Model.Add(myList[i].GetYourWord());
+        }
+      }
+
+      // if (forSorting.SequenceEqual(x))
+      // {
+      //   Model.Add(myList[i].GetYourWord());
+      // }
+    }
+    Console.WriteLine("**** NOW WRITING WINNERS ****");
+
+    for (var i = 0; i < Model.Count; i++)
+    {
+      Console.WriteLine(i + " : " + Model[i]);
+    }
+
+
+
+
+
+    // string value = "cat\r\ndog\r\nanimal\r\nperson";
+    //         // Split the string on line breaks.
+    //         // ... The return value from Split is a string array.
+    //         string[] lines = Regex.Split(value, "\r\n");
+    //
+    //         foreach (string line in lines)
+    //         {
+    //             Console.WriteLine(line);
+    //         }
+    // Regex.Replace("This is a test string, with lots of: punctuations; in it?!.", @"[^\w\s]", "");
+    // // Regex rgx = new Regex("[^/\w/\-]*");
+    // theirWord = rgx.Replace(theirWord, "");
+    // Console.WriteLine(theirWord[1]);
+
+    // myWord.BreakKeyWord();
+    // char[] forSorting = myWord.SortMyChars(myWord.GetMyChars());
+
+    // foreach (char character in forSorting)
+    // {
+    //   // Console.WriteLine(character + "\n");
+    //   model.Add(character+"\n");
+    // }
+    //  model.Add(Request.Form["our-word"]);
+    return View("Index", Model);
+    //  return View("Index", model);
+   }
   }
 }

@@ -5,33 +5,100 @@ namespace Anagrams.Models
 {
   public class Anagram
   {
-    private int _x;
-    private int _y;
+    private string _word;
+    private char[] _myChars;
+    private string[] _theirWords;
+    private char[] _theirWord;
+    private string _yourWord;
+    private static List<Anagram> _instances = new List<Anagram> {};
 
-    public Anagram(int x, int y)
+    public Anagram(string yourWord)
     {
-      _x = x;
-      _y = y;
+      _yourWord = yourWord;
     }
 
-    public bool SameX(int x)
+    public void Save()
     {
-      return x == _x;
+      _instances.Add(this);
     }
 
-    public bool SameY(int y)
+    public static List<Anagram> GetAll()
     {
-      return y == _y;
+      return _instances;
     }
 
-    public bool SameDiagonal(int x, int y)
+    public string GetMyWord()
     {
-      return Math.Abs(_x - x) == Math.Abs(_y - y);
+      return _word;
     }
 
-    public bool CanAttack(int x, int y)
+    public void SetMyWord(string myWord)
     {
-      return SameX(x) || SameY(y) || SameDiagonal(x, y);
+      _word = myWord;
+    }
+
+    public string GetYourWord()
+    {
+      return _yourWord;
+    }
+
+    public void SetYourWord(string yourWord)
+    {
+      _yourWord = yourWord;
+    }
+
+    public char[] GetMyChars()
+    {
+      return _myChars;
+    }
+
+    public void SetMyChars (char[] myChars)
+    {
+      _myChars = myChars;
+    }
+
+    public string[] GetTheirWords()
+    {
+      return _theirWords;
+    }
+
+    public void SetTheirWords(string[] theirWords)
+    {
+      _theirWords = theirWords;
+    }
+
+    public char[] GetTheirWord()
+    {
+      return _theirWord;
+    }
+
+    public void SetTheirWord (char[] myChars)
+    {
+      _theirWord = myChars;
+    }
+
+    // * Break Key word into an Array of Chars
+    //   1. String Key = "test";
+    //   2. var ourChars = Key.ToCharArray();
+
+    public void BreakKeyWord()
+    {
+      SetMyChars(GetMyWord().ToCharArray()); // make an array of Char from my Key word
+    }
+
+    public void BreakToChar(string aWord)
+    {
+      SetTheirWord(aWord.ToCharArray());
+    }
+
+    // * Sort ourChars
+    //   - EXPECTED INPUT: ["B", "E", "A", "R", "D"];
+    //   - EXPECTED OUTPUT: (each Char on a separate line, "A", "B", "D", "E", "R")
+
+    public char[] SortMyChars(char[] myChars)
+    {
+      Array.Sort(myChars);
+      return myChars;
     }
   }
 }

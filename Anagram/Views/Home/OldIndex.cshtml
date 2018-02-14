@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <title>Anagram Tester</title>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css'>
+    <link rel="stylesheet" href="~/css/styles.css">
+  </head>
+  <body>
+    <div class="container well">
+      <h1>Test An Anagram</h1>
+      <div class="row">
+        <form class="form" action="/" method="post">
+          <input type="number" name="qx" placeholder="Enter Queen's X">
+          <input type="number" name="qy" placeholder="Enter Queen's Y">
+          <input type="number" name="vx" placeholder="Enter Victim's X">
+          <input type="number" name="vy" placeholder="Enter Victim's Y">
+          <button type="submit" class="btn btn-info" name="button">GO!</button>
+        </form>
+      </div>
+      @if(@Model["msg"].Length > 0)
+      {
+        var isWhite = true;
+        @for(var y = 1; y <= 8; y++)
+        {
+          <div class="row">
+          @for(var x = 1; x <= 8; x++)
+          {
+              @if(isWhite)
+              {
+                <div class="col-xs-1 whiteSquare">
+                  @if(x == @Model["qx"] && y == @Model["qy"])
+                  {
+                    <img src="~/img/queen.png" alt="queen">
+                  }
+                  @if(x == @Model["vx"] && y == @Model["vy"])
+                  {
+                    <img id="pawn" src="~/img/pawn.png" alt="pawn">
+                  }
+                </div>
+              }
+              else
+              {
+                <div class="col-xs-1 redSquare">
+                  @if(x == @Model["qx"] && y == @Model["qy"])
+                  {
+                    <img src="~/img/queen.png" alt="queen">
+                  }
+                  @if(x == @Model["vx"] && y == @Model["vy"])
+                  {
+                    <img id="pawn" src="~/img/pawn.png" alt="pawn">
+                  }
+                </div>
+              }
+              isWhite = !isWhite;
+
+          }
+          </div>
+
+          isWhite = !isWhite;
+        }
+      }
+
+      <h3>@Model["msg"]</h3>
+
+
+
+
+    </div>
+  </body>
+</html>

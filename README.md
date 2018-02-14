@@ -1,5 +1,5 @@
 
-# Queen Attack
+# ANAGRAM
 
 #### By Andy Grossberg & Hamza Naeem
 
